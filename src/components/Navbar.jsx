@@ -18,7 +18,7 @@ const Navbar = () => {
         <Link to="/" className="nav-brand">
           <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <ShoppingBag size={24} color="var(--primary)" />
-            FindsHub
+            GenCart
           </span>
         </Link>
         

@@ -16,7 +16,7 @@ const About = () => {
         />
         <h2 style={{ fontSize: '1.5rem', marginBottom: '15px' }}>Our Mission</h2>
         <p style={{ marginBottom: '20px', color: 'var(--text-muted)' }}>
-          Welcome to FindsHub! We are passionate about discovering and sharing the most innovative, useful, and aesthetic products available online. Our team spends hours researching and testing to bring you curated lists of the absolute best finds.
+          Welcome to GenCart! We are passionate about discovering and sharing the most innovative, useful, and aesthetic products available online. Our team spends hours researching and testing to bring you curated lists of the absolute best finds.
         </p>
         <p style={{ marginBottom: '20px', color: 'var(--text-muted)' }}>
           Whether you are looking to upgrade your kitchen, enhance your tech setup, or make your living space cozier, we have got you covered with honest recommendations.
