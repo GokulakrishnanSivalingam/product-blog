@@ -11,11 +11,13 @@ import Login from './pages/Login';
 import { BlogProvider } from './context/BlogContext';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <AuthProvider>
       <BlogProvider>
+        <ScrollToTop />
         <div className="app-container">
           <Navbar />
           <main className="main-content">

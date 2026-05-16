@@ -1,0 +1,104 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.35); }
+  50% { transform: scale(0.92); }
+  75% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes countBump {
+  0% { transform: translateY(0); opacity: 1; }
+  40% { transform: translateY(-6px); opacity: 0.6; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes likeRing {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes particleBurst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.pulse:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+
+.like-btn--pop .like-btn__heart {
+  animation: heartPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.like-btn__count {
+  display: inline-block;
+  animation: countBump 0.4s ease;
+}
+
+.like-btn--pop::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid var(--primary);
+  animation: likeRing 0.55s ease-out forwards;
+  pointer-events: none;
+}
+
+.like-btn__particles::before,
+.like-btn__particles::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  top: 50%;
+  left: 50%;
+  animation: particleBurst 0.55s ease-out forwards;
+}
+
+.like-btn__particles::before {
+  --tx: -18px;
+  --ty: -14px;
+}
+
+.like-btn__particles::after {
+  --tx: 16px;
+  --ty: -12px;
+  animation-delay: 0.05s;
+}

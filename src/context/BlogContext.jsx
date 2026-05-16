@@ -2,6 +2,19 @@ import { createContext, useState, useEffect } from 'react';
 
 export const BlogContext = createContext();
 
+const LIKED_POSTS_KEY = 'affiliate_user_likes';
+
+const loadUserLikedIds = () => {
+  try {
+    const raw = localStorage.getItem(LIKED_POSTS_KEY);
+    if (!raw) return new Set();
+    const ids = JSON.parse(raw);
+    return new Set(Array.isArray(ids) ? ids : []);
+  } catch {
+    return new Set();
+  }
+};
+
 const initialPosts = [
   {
     id: 1,
@@ -13,7 +26,8 @@ const initialPosts = [
       "https://images.unsplash.com/photo-1584269599540-022d2571253a?q=80&w=800&auto=format&fit=crop"
     ],
     link: "https://amazon.in",
-    category: "Kitchen"
+    category: "Kitchen",
+    likes: 12
   },
   {
     id: 2,
@@ -24,7 +38,8 @@ const initialPosts = [
       "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=800&auto=format&fit=crop"
     ],
     link: "https://amazon.in",
-    category: "Tech"
+    category: "Tech",
+    likes: 8
   },
   {
     id: 3,
@@ -35,7 +50,8 @@ const initialPosts = [
       "https://images.unsplash.com/photo-1583847268964-b28ce8f30e9c?q=80&w=800&auto=format&fit=crop"
     ],
     link: "https://amazon.in",
-    category: "Home Decor"
+    category: "Home Decor",
+    likes: 15
   },
   {
     id: 4,
@@ -46,11 +62,14 @@ const initialPosts = [
       "https://images.unsplash.com/photo-1557438159-51eec7a6c9e8?q=80&w=800&auto=format&fit=crop"
     ],
     link: "https://amazon.in",
-    category: "Tech"
+    category: "Tech",
+    likes: 5
   }
 ];
 
 export const BlogProvider = ({ children }) => {
+  const [userLikedIds, setUserLikedIds] = useState(loadUserLikedIds);
+
   const [posts, setPosts] = useState(() => {
     const savedPosts = localStorage.getItem('affiliate_posts');
     if (savedPosts) {
@@ -73,16 +92,44 @@ export const BlogProvider = ({ children }) => {
     localStorage.setItem('affiliate_posts', JSON.stringify(posts));
   }, [posts]);
 
+  useEffect(() => {
+    localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...userLikedIds]));
+  }, [userLikedIds]);
+
   const addPost = (post) => {
-    setPosts([{ ...post, id: Date.now() }, ...posts]);
+    setPosts([{ ...post, id: Date.now(), likes: 0 }, ...posts]);
   };
 
   const deletePost = (id) => {
     setPosts(posts.filter(p => p.id !== id));
   };
 
+  const hasUserLiked = (id) => userLikedIds.has(id);
+
+  const toggleLike = (id) => {
+    const alreadyLiked = userLikedIds.has(id);
+
+    setUserLikedIds((prev) => {
+      const next = new Set(prev);
+      if (alreadyLiked) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+    setPosts((prev) =>
+      prev.map((p) => {
+        if (p.id !== id) return p;
+        const count = p.likes || 0;
+        return {
+          ...p,
+          likes: alreadyLiked ? Math.max(0, count - 1) : count + 1,
+        };
+      })
+    );
+  };
+
   return (
-    <BlogContext.Provider value={{ posts, addPost, deletePost }}>
+    <BlogContext.Provider value={{ posts, addPost, deletePost, toggleLike, hasUserLiked }}>
       {children}
     </BlogContext.Provider>
   );
