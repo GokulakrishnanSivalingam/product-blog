@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Top 5 Amazon Finds Under ₹999 - Kitchen Edition",
+    "description": "Upgrade your kitchen without breaking the bank! These smart kitchen gadgets will save you time and space. From a multi-functional vegetable chopper to a sleek digital scale, these are absolute must-haves.",
+    "images": [
+      "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1584269599540-022d2571253a?q=80&w=800&auto=format&fit=crop"
+    ],
+    "link": "https://amazon.in",
+    "category": "Kitchen",
+    "likes": 12
+  },
+  {
+    "id": 2,
+    "title": "Minimalist Desk Setup: Productivity Boosters",
+    "description": "Create the ultimate workspace with these sleek tech gadgets. Featuring the best ergonomic mouse, a clean wireless mechanical keyboard, and a stylish monitor light bar.",
+    "images": [
+      "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=800&auto=format&fit=crop"
+    ],
+    "link": "https://amazon.in",
+    "category": "Tech",
+    "likes": 8
+  },
+  {
+    "id": 3,
+    "title": "Cozy Home Decor Essentials for Winter",
+    "description": "Transform your living room into a cozy haven. Check out these top-rated Amazon finds including chunky knit blankets, warm ambient lighting, and aesthetic vases.",
+    "images": [
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1583847268964-b28ce8f30e9c?q=80&w=800&auto=format&fit=crop"
+    ],
+    "link": "https://amazon.in",
+    "category": "Home Decor",
+    "likes": 15
+  },
+  {
+    "id": 4,
+    "title": "Smart Home Starter Kit on a Budget",
+    "description": "Automate your home easily with these affordable smart plugs, LED strips, and a mini smart speaker. Perfect for beginners entering the smart home ecosystem.",
+    "images": [
+      "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1557438159-51eec7a6c9e8?q=80&w=800&auto=format&fit=crop"
+    ],
+    "link": "https://amazon.in",
+    "category": "Tech",
+    "likes": 5
+  }
+]

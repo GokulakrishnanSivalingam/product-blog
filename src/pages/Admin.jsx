@@ -1,9 +1,19 @@
 import { useState, useContext } from 'react';
 import { BlogContext } from '../context/BlogContext';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Cloud, RefreshCw, AlertCircle } from 'lucide-react';
 
 const Admin = () => {
-  const { posts, addPost, deletePost } = useContext(BlogContext);
+  const {
+    posts,
+    addPost,
+    deletePost,
+    loading,
+    saving,
+    syncError,
+    syncMode,
+    cloudSyncEnabled,
+    refreshPosts,
+  } = useContext(BlogContext);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -45,6 +55,41 @@ const Admin = () => {
 
   return (
     <div>
+      <div className={`admin-sync-banner admin-sync-banner--${syncMode}`}>
+        {cloudSyncEnabled ? (
+          <>
+            <Cloud size={18} />
+            <span>
+              <strong>Cloud sync on</strong> — posts are shared on every device.
+              {saving && ' Saving…'}
+            </span>
+          </>
+        ) : (
+          <>
+            <AlertCircle size={18} />
+            <span>
+              <strong>Shared file mode</strong> — everyone loads{' '}
+              <code>public/posts.json</code>. Add JSONBin keys in <code>.env</code> (see{' '}
+              <code>.env.example</code>) so admin edits sync to all devices.
+            </span>
+          </>
+        )}
+        <button
+          type="button"
+          className="btn btn-outline btn-sm"
+          onClick={refreshPosts}
+          disabled={loading}
+        >
+          <RefreshCw size={14} />
+          Refresh
+        </button>
+      </div>
+      {syncError && (
+        <p className="admin-sync-error" role="alert">
+          {syncError}
+        </p>
+      )}
+
       <div className="admin-container">
         <h2 style={{ marginBottom: '20px' }}>Add New Post</h2>
         <form onSubmit={handleSubmit}>
@@ -119,7 +164,9 @@ const Admin = () => {
 
       <div className="admin-posts-list admin-container" style={{ marginTop: '40px' }}>
         <h2 style={{ marginBottom: '20px' }}>Manage Posts</h2>
-        {posts.length === 0 ? (
+        {loading ? (
+          <p>Loading posts…</p>
+        ) : posts.length === 0 ? (
           <p>No posts available.</p>
         ) : (
           posts.map(post => (
