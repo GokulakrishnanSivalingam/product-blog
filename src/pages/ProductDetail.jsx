@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { BlogContext } from '../context/BlogContext';
 import { ExternalLink, ArrowLeft } from 'lucide-react';
 import LikeButton from '../components/LikeButton';
+import './Products.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
