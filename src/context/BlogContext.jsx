@@ -77,9 +77,12 @@ const initialPosts = [
   },
 ];
 
+const initialCollections = [];
+
 export const BlogProvider = ({ children }) => {
   const [userLikedIds, setUserLikedIds] = useState(loadUserLikedIds);
   const [posts, setPosts] = useState(initialPosts);
+  const [collections, setCollections] = useState(initialCollections);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [syncError, setSyncError] = useState(null);
@@ -133,12 +136,20 @@ export const BlogProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const addPost = (post) => {
-    setPosts((prev) => [{ ...post, id: Date.now(), likes: 0 }, ...prev]);
+  const addPost = (newPost) => {
+    setPosts((prevPosts) => [...prevPosts, { ...newPost, id: prevPosts.length + 1 }]);
   };
 
   const deletePost = (id) => {
-    setPosts((prev) => prev.filter((p) => p.id !== id));
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+  };
+
+  const addCollection = (newCollection) => {
+    setCollections((prevCollections) => [...prevCollections, { ...newCollection, id: prevCollections.length + 1 }]);
+  };
+
+  const deleteCollection = (id) => {
+    setCollections((prevCollections) => prevCollections.filter((collection) => collection.id !== id));
   };
 
   const hasUserLiked = (id) => userLikedIds.has(id);
@@ -169,6 +180,7 @@ export const BlogProvider = ({ children }) => {
     <BlogContext.Provider
       value={{
         posts,
+        collections,
         loading,
         saving,
         syncError,
@@ -177,6 +189,8 @@ export const BlogProvider = ({ children }) => {
         refreshPosts,
         addPost,
         deletePost,
+        addCollection,
+        deleteCollection,
         toggleLike,
         hasUserLiked,
       }}
@@ -185,3 +199,5 @@ export const BlogProvider = ({ children }) => {
     </BlogContext.Provider>
   );
 };
+
+export default BlogProvider;

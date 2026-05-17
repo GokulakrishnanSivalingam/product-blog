@@ -75,49 +75,30 @@ export async function loadPosts(fallback = []) {
     console.warn("Local file load failed:", err);
   }
 
-  // 💾 3. Try cache
-  try {
-    const cached = localStorage.getItem(CACHE_KEY);
-
-    if (cached) {
-      const posts = migratePosts(JSON.parse(cached));
-      if (posts?.length) return posts;
-    }
-  } catch (err) {
-    console.warn("Cache load failed:", err);
-  }
-
-  // 🔁 4. Fallback
   return fallback;
 }
 
 // ✅ SAVE POSTS
 export async function savePosts(posts) {
-  // Always cache locally
-  localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+  if (isCloudSyncEnabled()) {
+    try {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': API_KEY,
+        },
+        body: JSON.stringify({ posts }),
+      });
 
-  // If cloud disabled → just return
-  if (!isCloudSyncEnabled()) {
-    return { ok: true, mode: 'shared' };
-  }
-
-  try {
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': API_KEY,
-      },
-      body: JSON.stringify({ posts }),
-    });
-
-    if (!res.ok) {
-      throw new Error('Cloud save failed');
+      if (!res.ok) {
+        throw new Error('Failed to save posts to cloud');
+      }
+    } catch (err) {
+      console.error('Failed to save posts to cloud:', err);
     }
-
-    return { ok: true, mode: 'cloud' };
-  } catch (err) {
-    console.error("Save error:", err);
-    throw err;
   }
+
+  // Save to local storage
+  localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 }

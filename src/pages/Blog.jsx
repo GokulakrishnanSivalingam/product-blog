@@ -2,9 +2,11 @@ import { useContext, useState } from 'react';
 import { BlogContext } from '../context/BlogContext';
 import PostCard from '../components/PostCard';
 import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Blog = () => {
   const { posts } = useContext(BlogContext);
+  const navigate = useNavigate();
   const [filter, setFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('newest');

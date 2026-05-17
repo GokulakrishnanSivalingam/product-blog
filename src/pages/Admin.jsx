@@ -7,6 +7,9 @@ const Admin = () => {
     posts,
     addPost,
     deletePost,
+    addCollection,
+    deleteCollection,
+    collections,
     loading,
     saving,
     syncError,
@@ -21,6 +24,18 @@ const Admin = () => {
     link: '',
     category: 'Kitchen'
   });
+
+  // Collection creation state
+  const [collectionForm, setCollectionForm] = useState({
+    title: '',
+    thumbnail: '',
+    description: ''
+  });
+
+  // Bulk product creation state
+  const [bulkProductCount, setBulkProductCount] = useState(0);
+  const [bulkProducts, setBulkProducts] = useState([]);
+  const [showBulkSection, setShowBulkSection] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,6 +66,59 @@ const Admin = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleCollectionChange = (e) => {
+    setCollectionForm({
+      ...collectionForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleCollectionSubmit = (e) => {
+    e.preventDefault();
+    
+    // First create the collection
+    const newCollection = {
+      title: collectionForm.title,
+      thumbnail: collectionForm.thumbnail,
+      description: collectionForm.description,
+      products: bulkProducts.filter(p => p.title && p.image && p.description && p.link)
+    };
+    
+    addCollection(newCollection);
+    
+    // Reset forms
+    setCollectionForm({
+      title: '',
+      thumbnail: '',
+      description: ''
+    });
+    setBulkProductCount(0);
+    setBulkProducts([]);
+    setShowBulkSection(false);
+    alert('Collection created successfully!');
+  };
+
+  // Bulk product creation handlers
+  const handleBulkCountChange = (e) => {
+    const count = parseInt(e.target.value) || 0;
+    setBulkProductCount(count);
+    
+    // Initialize bulk products array with empty objects
+    const newBulkProducts = Array.from({ length: count }, () => ({
+      title: '',
+      image: '',
+      description: '',
+      link: ''
+    }));
+    setBulkProducts(newBulkProducts);
+  };
+
+  const handleBulkProductChange = (index, field, value) => {
+    const updatedProducts = [...bulkProducts];
+    updatedProducts[index][field] = value;
+    setBulkProducts(updatedProducts);
   };
 
   return (
@@ -160,6 +228,139 @@ const Admin = () => {
             Add Post
           </button>
         </form>
+      </div>
+
+      {/* Collection Creation Section */}
+      <div className="admin-container" style={{ marginTop: '40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <h2 style={{ marginBottom: '0' }}>Create Collection</h2>
+          <button 
+            type="button" 
+            className="btn btn-outline"
+            onClick={() => setShowBulkSection(!showBulkSection)}
+          >
+            {showBulkSection ? 'Hide' : 'Show'}
+          </button>
+        </div>
+        
+        {showBulkSection && (
+          <form onSubmit={handleCollectionSubmit}>
+            <div className="form-group">
+              <label>Collection Title</label>
+              <input 
+                type="text" 
+                name="title"
+                className="form-control" 
+                value={collectionForm.title} 
+                onChange={handleCollectionChange}
+                placeholder="e.g., Top 5 Trending Products"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Thumbnail Image URL</label>
+              <input 
+                type="url" 
+                name="thumbnail"
+                className="form-control" 
+                value={collectionForm.thumbnail} 
+                onChange={handleCollectionChange}
+                placeholder="https://..."
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Collection Description</label>
+              <textarea 
+                name="description"
+                className="form-control" 
+                value={collectionForm.description} 
+                onChange={handleCollectionChange}
+                required
+                style={{ minHeight: '80px' }}
+              ></textarea>
+            </div>
+
+            <div className="form-group">
+              <label>Number of Products</label>
+              <input 
+                type="number" 
+                min="1" 
+                max="20"
+                className="form-control" 
+                value={bulkProductCount} 
+                onChange={handleBulkCountChange} 
+                placeholder="Enter number (e.g., 5)"
+              />
+            </div>
+
+            {bulkProducts.map((product, index) => (
+              <div key={index} style={{ 
+                border: '1px solid #ddd', 
+                padding: '15px', 
+                marginBottom: '15px', 
+                borderRadius: '8px',
+                backgroundColor: '#f9f9f9'
+              }}>
+                <h4 style={{ marginBottom: '10px' }}>Product {index + 1}</h4>
+                
+                <div className="form-group">
+                  <label>Title</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    value={product.title} 
+                    onChange={(e) => handleBulkProductChange(index, 'title', e.target.value)}
+                    required 
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Image URL</label>
+                  <input 
+                    type="url" 
+                    className="form-control" 
+                    value={product.image} 
+                    onChange={(e) => handleBulkProductChange(index, 'image', e.target.value)}
+                    placeholder="https://..."
+                    required 
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Description</label>
+                  <textarea 
+                    className="form-control" 
+                    value={product.description} 
+                    onChange={(e) => handleBulkProductChange(index, 'description', e.target.value)}
+                    required
+                    style={{ minHeight: '60px' }}
+                  ></textarea>
+                </div>
+                
+                <div className="form-group">
+                  <label>Link</label>
+                  <input 
+                    type="url" 
+                    className="form-control" 
+                    value={product.link} 
+                    onChange={(e) => handleBulkProductChange(index, 'link', e.target.value)}
+                    placeholder="https://amazon.in/..."
+                    required 
+                  />
+                </div>
+              </div>
+            ))}
+
+            {bulkProducts.length > 0 && (
+              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '10px' }}>
+                Create Collection with Products
+              </button>
+            )}
+          </form>
+        )}
       </div>
 
       <div className="admin-posts-list admin-container" style={{ marginTop: '40px' }}>

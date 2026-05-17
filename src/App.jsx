@@ -8,10 +8,13 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import ProductDetail from './pages/ProductDetail';
 import Login from './pages/Login';
+import Products from './pages/Products';
+import CollectionDetail from './pages/CollectionDetail';
 import { BlogProvider } from './context/BlogContext';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import ScrollToTop from './components/ScrollToTop';
+
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/collection/:id" element={<CollectionDetail />} />
+              
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />

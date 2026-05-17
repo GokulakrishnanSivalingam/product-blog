@@ -47,5 +47,17 @@
     "link": "https://amazon.in",
     "category": "Tech",
     "likes": 5
+  },
+  {
+    "id": 5,
+    "title": "Outdoor Adventure Gear for Beginners",
+    "description": "Explore the great outdoors with these beginner-friendly adventure essentials. Includes a durable backpack, compact sleeping bag, and a reliable water filter.",
+    "images": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516569424844-2c3c7e367b6f?q=80&w=800&auto=format&fit=crop"
+    ],
+    "link": "https://amazon.in",
+    "category": "Outdoor",
+    "likes": 10
   }
 ]
