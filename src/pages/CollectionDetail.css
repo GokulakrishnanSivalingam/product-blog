@@ -110,9 +110,9 @@ body {
   padding-bottom: 0;
 }
 
-.product-image {
+.product-image img {
   width: 100% !important;
-  height: auto !important;
+  height: 100%  !important;
   object-fit: contain !important;
 }
 
