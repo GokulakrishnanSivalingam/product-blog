@@ -1,3 +1,6 @@
+*{
+    font-family: 'Inter', sans-serif;
+}
 .collection-detail-page {
   min-height: 100vh;
   background: #ffffff;
