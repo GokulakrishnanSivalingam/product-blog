@@ -612,9 +612,4 @@ body {
     font-size: 1.5rem;
   }
 }
-.collection-description,
-.product-description,
-.empty-state p,
-.collection-detail-not-found p {
-  text-align: justify;
-}
+
