@@ -28,7 +28,7 @@ const migratePosts = (posts) => {
 export async function loadPosts(fallback = []) {
   if (isCloudSyncEnabled()) {
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/6a090d44c0954111d8349c27/latest`, {
         headers: { 'X-Master-Key': API_KEY },
       });
       if (res.ok) {
@@ -78,7 +78,7 @@ export async function savePosts(posts) {
     return { ok: true, mode: 'shared' };
   }
 
-  const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+  const res = await fetch(`https://api.jsonbin.io/v3/b/6a090d44c0954111d8349c27`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
