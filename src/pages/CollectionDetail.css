@@ -110,9 +110,9 @@ body {
   padding-bottom: 0;
 }
 
-.product-image img {
-  width: 100% !important;
-  height: 100%  !important;
+.product-image  {
+  width: 500px !important;
+  height: 500px !important;
   object-fit: contain !important;
 }
 
@@ -611,8 +611,10 @@ body {
     font-size: 1.5rem;
   }
 }
-.collection-description p
-{
-  text:justify;
+.collection-description,
+.product-description,
+.empty-state p,
+.collection-detail-not-found p {
+  text-align: justify;
 }
 
