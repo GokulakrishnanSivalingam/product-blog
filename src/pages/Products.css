@@ -1,0 +1,254 @@
+.products-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  padding: 40px 20px;
+}
+
+.products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-primary, #333);
+  line-height: 1.2;
+}
+
+.products-page-subtitle {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--text-muted, #666);
+  margin-bottom: 40px;
+  max-width: 800px;
+}
+
+.empty-collections {
+  text-align: center;
+  padding: 80px 40px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.empty-collections h3 {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: var(--text-primary, #333);
+}
+
+.empty-collections p {
+  color: var(--text-muted, #666);
+  margin-top: 8px;
+  font-size: 1.05rem;
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.collection-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.collection-link:hover {
+  transform: translateY(-4px);
+}
+
+.collection-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.collection-card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover .collection-card-image {
+  transform: scale(1.05);
+}
+
+.collection-card-content {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.collection-card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary, #333);
+  line-height: 1.3;
+}
+
+.collection-card-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-muted, #666);
+  margin-bottom: 16px;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.collection-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  color: var(--primary, #007bff);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.arrow-icon {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.collection-card:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Responsive Design - Tablet */
+@media (max-width: 768px) {
+  .products-page {
+    padding: 30px 16px;
+  }
+
+  .products-page-title {
+    font-size: 2rem;
+  }
+
+  .products-page-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+
+  .collections-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .collection-card-image {
+    height: 200px;
+  }
+
+  .collection-card-content {
+    padding: 20px;
+  }
+
+  .collection-card-title {
+    font-size: 1.3rem;
+  }
+
+  .collection-card-description {
+    font-size: 0.95rem;
+  }
+
+  .empty-collections {
+    padding: 60px 30px;
+  }
+
+  .empty-collections h3 {
+    font-size: 1.4rem;
+  }
+
+  .empty-collections p {
+    font-size: 1rem;
+  }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 480px) {
+  .products-page {
+    padding: 20px 12px;
+  }
+
+  .products-page-title {
+    font-size: 1.8rem;
+  }
+
+  .products-page-subtitle {
+    font-size: 1rem;
+    margin-bottom: 24px;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .collection-card {
+    border-radius: 12px;
+  }
+
+  .collection-card-image {
+    height: 180px;
+  }
+
+  .collection-card-content {
+    padding: 18px;
+  }
+
+  .collection-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .collection-card-description {
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .collection-card-footer {
+    padding-top: 12px;
+    font-size: 0.9rem;
+  }
+
+  .empty-collections {
+    padding: 40px 20px;
+    border-radius: 12px;
+  }
+
+  .empty-collections h3 {
+    font-size: 1.2rem;
+  }
+
+  .empty-collections p {
+    font-size: 0.95rem;
+  }
+}

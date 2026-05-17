@@ -2,6 +2,8 @@ import { createContext, useState, useEffect, useRef, useCallback } from 'react';
 import {
   loadPosts,
   savePosts,
+  loadCollections,
+  saveCollections,
   isCloudSyncEnabled,
   getSyncMode,
 } from '../services/postsStorage';
@@ -88,6 +90,7 @@ export const BlogProvider = ({ children }) => {
   const [syncError, setSyncError] = useState(null);
   const [syncMode] = useState(getSyncMode);
   const skipSave = useRef(true);
+  const skipSaveCollections = useRef(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -98,6 +101,22 @@ export const BlogProvider = ({ children }) => {
         setPosts(loaded);
         setLoading(false);
         skipSave.current = false;
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      const loadedCollections = await loadCollections(initialCollections);
+      if (!cancelled) {
+        setCollections(loadedCollections);
+        skipSaveCollections.current = false;
       }
     })();
 
@@ -128,11 +147,37 @@ export const BlogProvider = ({ children }) => {
     return () => clearTimeout(timer);
   }, [posts, loading]);
 
+  useEffect(() => {
+    if (skipSaveCollections.current || loading) return;
+
+    const timer = setTimeout(async () => {
+      setSaving(true);
+      setSyncError(null);
+      try {
+        await saveCollections(collections);
+      } catch {
+        setSyncError('Could not sync collections. Check your connection or JSONBin settings.');
+      } finally {
+        setSaving(false);
+      }
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [collections, loading]);
+
   const refreshPosts = useCallback(async () => {
     setLoading(true);
     setSyncError(null);
     const loaded = await loadPosts(initialPosts);
     setPosts(loaded);
+    setLoading(false);
+  }, []);
+
+  const refreshCollections = useCallback(async () => {
+    setLoading(true);
+    setSyncError(null);
+    const loaded = await loadCollections(initialCollections);
+    setCollections(loaded);
     setLoading(false);
   }, []);
 
@@ -187,6 +232,7 @@ export const BlogProvider = ({ children }) => {
         syncMode,
         cloudSyncEnabled: isCloudSyncEnabled(),
         refreshPosts,
+        refreshCollections,
         addPost,
         deletePost,
         addCollection,
