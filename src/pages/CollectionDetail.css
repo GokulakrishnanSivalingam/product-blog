@@ -242,6 +242,9 @@ body {
   .empty-state p {
     font-size: 1rem;
   }
+  .collection-header {
+  overflow: hidden; /* prevent overflow cut */
+}
 }
 
 /* Responsive Design - Mobile */
