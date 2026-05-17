@@ -247,7 +247,7 @@ body {
 /* Responsive Design - Mobile */
 @media (max-width: 480px) {
   .collection-detail-container {
-    padding: 32px 16px;
+    padding: 12px 8px;
   }
 
   .collection-header {
@@ -256,7 +256,7 @@ body {
   }
 
   .collection-thumbnail {
-    height: 250px;
+    height: 280px;
   }
 
   .collection-title {
@@ -282,7 +282,7 @@ body {
   }
 
   .product-image {
-    height: 250px;
+    height: 320px;
   }
 
   .product-title {
