@@ -252,15 +252,18 @@ body {
   .collection-detail-container {
     padding: 12px 8px;
   }
+  .collection-thumbnail {
+    width: 100%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 6px;
 
   .collection-header {
     margin-bottom: 40px;
     padding-bottom: 32px;
   }
 
-  .collection-thumbnail {
-    height: 280px;
-  }
+  
 
   .collection-title {
     font-size: 2rem;
