@@ -190,7 +190,7 @@ body {
 /* Responsive Design - Tablet */
 @media (max-width: 768px) {
   .collection-detail-container {
-    padding: 40px 20px;
+    padding: 20px 10px;
   }
 
   .collection-thumbnail {
